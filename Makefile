@@ -39,7 +39,7 @@ install-vpc: session-parse
 	${PROJECT}-${ENV}-${SERVICE}:terraform tf_apply
 
 build-ami: session-parse
-	@docker run --rm -u "${DOCKER_UID}":"${DOCKER_GID}" -v "${PWD}"/passwd:/etc/passwd:ro -v "${PWD}"/packer:/app \
+	@docker run --rm -u "${DOCKER_UID}":"${DOCKER_GID}" -v "${PWD}"/passwd:/etc/passwd:ro -v "${PWD}":/app \
 	  -e AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID} \
 	  -e AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY} \
 	  -e AWS_SESSION_TOKEN=${AWS_SESSION_TOKEN} \
