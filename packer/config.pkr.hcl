@@ -23,8 +23,12 @@ variable "subnet_id" {
   type = string
 }
 
+locals {
+  timestamp = regex_replace(timestamp(), "[- TZ:]", "")
+}
+
 source "amazon-ebs" "main" {
-  ami_name      = "${var.project}-${var.env}-${var.service}"
+  ami_name      = "${var.project}-${var.env}-${var.service}-${local.timestamp}"
   instance_type = "t3a.small"
   subnet_id     = var.subnet_id
 
