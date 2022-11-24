@@ -36,7 +36,7 @@ install-vpc: session-parse
 	  -e PROJECT=${PROJECT} \
 	  -e ENV=${ENV} \
 	  -e SERVICE=${SERVICE} \
-	${PROJECT}-${ENV}-${SERVICE}:terraform
+	${PROJECT}-${ENV}-${SERVICE}:terraform tf_apply
 
 build-ami: session-parse
 	@docker run --rm -u "${DOCKER_UID}":"${DOCKER_GID}" -v "${PWD}"/passwd:/etc/passwd:ro -v "${PWD}"/packer:/app \
@@ -48,3 +48,14 @@ build-ami: session-parse
 	  -e ENV=${ENV} \
 	  -e SERVICE=${SERVICE} \
 	${PROJECT}-${ENV}-${SERVICE}:packer
+
+destroy: session-parse
+	@docker run --rm -u "${DOCKER_UID}":"${DOCKER_GID}" -v "${PWD}"/passwd:/etc/passwd:ro -v "${PWD}"/terraform/base:/app \
+	  -e AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID} \
+	  -e AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY} \
+	  -e AWS_SESSION_TOKEN=${AWS_SESSION_TOKEN} \
+	  -e AWS_DEFAULT_REGION=${AWS_DEFAULT_REGION} \
+	  -e PROJECT=${PROJECT} \
+	  -e ENV=${ENV} \
+	  -e SERVICE=${SERVICE} \
+	${PROJECT}-${ENV}-${SERVICE}:terraform tf_destroy

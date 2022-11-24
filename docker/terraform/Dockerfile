@@ -9,4 +9,4 @@ RUN curl -s https://releases.hashicorp.com/terraform/1.3.5/terraform_1.3.5_linux
   rm -rf /tmp/terraform_1.3.5_linux_amd64.zip
 
 COPY docker/terraform/init.sh /usr/bin/init.sh
-CMD [ "/usr/bin/init.sh" ]
+ENTRYPOINT [ "/usr/bin/init.sh" ]
