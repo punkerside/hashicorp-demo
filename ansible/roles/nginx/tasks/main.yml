@@ -1,0 +1,11 @@
+- name: install nginx
+  apt:
+    name: nginx
+
+- name: copy nginx config
+  copy:
+    src: "{{ role_path }}/files/nginx.conf"
+    dest: /etc/nginx/nginx.conf
+    owner: root
+    group: root
+    mode: 0755

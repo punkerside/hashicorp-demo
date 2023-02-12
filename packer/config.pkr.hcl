@@ -47,7 +47,7 @@ source "amazon-ebs" "main" {
 build {
   sources = ["source.amazon-ebs.main"]
 
-  provisioner "shell" {
-    inline = ["echo Connected via SSH"]
+  provisioner "ansible" {
+    playbook_file = "ansible/playbook.yml"
   }
 }
