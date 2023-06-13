@@ -1,25 +1,13 @@
 packer {
   required_plugins {
     amazon = {
-      version = ">= 1.1.0"
+      version = ">= 1.2.0"
       source  = "github.com/hashicorp/amazon"
     }
   }
 }
 
-variable "project" {
-  type = string
-}
-
-variable "env" {
-  type = string
-}
-
-variable "service" {
-  type = string
-}
-
-variable "subnet_id" {
+variable "name" {
   type = string
 }
 
@@ -28,9 +16,16 @@ locals {
 }
 
 source "amazon-ebs" "main" {
-  ami_name      = "${var.project}-${var.env}-${var.service}-${local.timestamp}"
+  ami_name      = "${var.name}-${local.timestamp}"
   instance_type = "t3a.small"
-  subnet_id     = var.subnet_id
+
+  subnet_filter {
+    filters = {
+          "tag:Name": "${var.name}-public-*"
+    }
+    most_free = true
+    random    = false
+  }
 
   source_ami_filter {
     filters = {

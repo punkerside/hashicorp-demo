@@ -10,3 +10,4 @@ passwd
 .ansible/
 punkerside.ansible_ubuntu_common/
 common/
+.vscode/

@@ -1,6 +1,5 @@
-FROM alpine:3.17.0
+FROM alpine:3.17.3
 
 RUN apk update && apk upgrade
-RUN apk add bash
 
 WORKDIR /app
